@@ -1,0 +1,33 @@
+* CRUD I: QUERYING ON ARRAY FIELDS
+----------------------------------
+
+* Matching Multiple Array Elements with $all
+--------------------------------------------
+
+db.books.find({ genres: { $all: [ "science fiction", "adventure" ] } })
+
+* Result:
+---------
+
+{
+  _id: ObjectId(...),
+  title: "Jurassic Park",
+  author: "Michael Crichton",
+  year_published: 1990,
+  genres: ["science fiction", "adventure", "fantasy", "thriller"]
+},
+{
+  _id: ObjectId(...),
+  title: "A Wrinkle in Time",
+  author: "Madeleine L'Engle",
+  year_published: 1962,
+  genres: ["young adult", "fantasy", "science fiction", "adventure"]
+},
+{
+  _id: ObjectId(...),
+  title: "Dune",
+  author: "Frank Herbert",
+  year_published: 1965,
+  genres: ["science fiction", "fantasy", "adventure"]
+},
+…
