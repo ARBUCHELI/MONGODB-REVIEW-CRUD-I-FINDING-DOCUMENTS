@@ -3,11 +3,15 @@
 
 * Matching Multiple Array Elements with $all
 --------------------------------------------
+db.<collection>.find({ <field>: { $all: [ <value1>, <value2>, … ] } })
 
-db.books.find({ genres: { $all: [ "science fiction", "adventure" ] } })
+	Example
+	-------
 
-* Result:
----------
+	db.books.find({ genres: { $all: [ "science fiction", "adventure" ] } })
+
+	Result
+	------
 
 {
   _id: ObjectId(...),
@@ -31,3 +35,39 @@ db.books.find({ genres: { $all: [ "science fiction", "adventure" ] } })
   genres: ["science fiction", "fantasy", "adventure"]
 },
 …
+
+* Querying on compound filter conditions
+----------------------------------------
+
+db.<collection>.find({ <field>: { <operator>: <value>, <operator2>: <value2>, … } })
+
+	Example
+	-------
+		. db.tennis_players.find({ wimbledon_singles_wins: { $gt: 1971, $lt: 1935 } })
+	
+	Result
+	------
+
+{
+  _id: ObjectId(...),
+  name: "Suzanna Lenglen",
+  country: "United States",
+  wimbledon_singles_wins: [1919, 1920, 1921, 1922, 1923, 1925]
+},
+{
+  _id: ObjectId(...),
+  name: "Roger Federer",
+  country: "Switzerland",
+  wimbledon_singles_wins: [2003, 2004, 2005, 2006, 2007, 2009, 2012, 2017]
+},
+…
+
+
+* Querying for all conditions with $elemMatch
+---------------------------------------------
+
+
+	
+
+
+
