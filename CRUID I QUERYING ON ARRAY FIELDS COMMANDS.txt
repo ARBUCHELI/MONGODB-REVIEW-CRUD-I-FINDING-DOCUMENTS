@@ -97,6 +97,144 @@ db.<collection>.find({ <field>: { $elemMatch: { <operator>: <value>, <operator2>
 }
 
 
+* Querying an Array of Embedded Documents
+-----------------------------------------
+	- Example:
+	----------
+
+{
+  _id: ObjectId(...),
+  name: "Miyu Kato",
+  country: "Japan",
+  wimbledon_doubles_placements: 
+  [{ 
+    year: 2016,
+    place: 2
+  }, 
+  { 
+    year: 2017,
+    place: 1
+  },
+  { 
+    year: 2018,
+    place: 1
+  },
+  { 
+    year: 2019,
+    place: 1
+  }]
+}
+
+db.tennis_players.find( { "wimbledon_doubles_placements": { year: 2019, place: 2 } } )
+
+	- Result:
+	---------
+
+{
+  _id: ObjectId(...),
+  name: "Gabriela Dabrowski",
+  country: "Canada",
+  wimbledon_doubles_placements: 
+  [{ 
+    year: 2019,
+    place: 2
+  }]
+},
+{
+  _id: ObjectId(...),
+  name: "Yifan Xu",
+  country: “China”,
+  wimbledon_doubles_placements: 
+  [{ 
+    year: 2019,
+    place: 2
+  }]
+}…
+
+	- However, a query like this:
+
+		.	db.tennis_players.find( { "wimbledon_doubles_placements": {place: 2,  year: 2019 } } )
+
+	Would not return any results since there would be no documents with that specific ordering.
+
+	We can also query based on a single field. For example, if we just wanted to query for any Wimbledon doubles winners in the year 2016, we can do the following:   
+
+	db.tennis_players.find( { "wimbledon_doubles_placements.year": 2016 )
+
+	- This query would return results like the following:
+
+{
+  _id: ObjectId(...),
+  name: "Tímea Babos",
+  country: "Hungary",
+  wimbledon_doubles_placements: 
+  [{ 
+    year: 2015,
+    place: 4
+   },
+   {
+    year: 2016,
+    place: 2
+  }]
+{
+  _id: ObjectId(...),
+  name: "Yaroslava Shvedova",
+  country: "Kazakhstan",
+  wimbledon_doubles_placements: 
+  [{ 
+    year: 2010,
+    place: 1
+   },
+   {
+    year: 2016,
+    place: 2
+  }]
+}…
+
+	- General syntax:
+
+db.<collection>.find({ <parent field>: { <embedded document field>: <value>, <embedded document field2>: <value2>, ... } } )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 
 
